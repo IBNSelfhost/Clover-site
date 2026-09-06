@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { resolveLocale, useTranslations, localePath, otherLocale, htmlLang } from '../i18n/utils';
+import { locales } from '../i18n/ui';
 
 interface Props { title?: string; description?: string }
 const locale = resolveLocale(Astro.currentLocale);
@@ -8,7 +9,7 @@ const t = useTranslations(locale);
 const { title = t('site.name'), description = t('site.description') } = Astro.props;
 const other = otherLocale(locale);
 // Same page in the other language: drop the locale prefix of the current path, re-add the other one.
-const slug = Astro.url.pathname.replace(/^\/(en)\//, '/').replace(/^\//, '').replace(/\/$/, '');
+const slug = Astro.url.pathname.replace(new RegExp(`^/(${locales.join('|')})/`), '/').replace(/^\//, '').replace(/\/$/, '');
 const switchHref = localePath(other, slug);
 const nav = [
   { href: localePath(locale), label: t('nav.home') },

@@ -6,8 +6,8 @@ export default defineConfig({
   site: 'https://clover.ibn5100.de',
   output: 'static',
   i18n: {
-    defaultLocale: 'zh',
+    defaultLocale: 'en',
     locales: ['zh', 'en'],
-    routing: { prefixDefaultLocale: false },   // zh at /, en at /en/
+    routing: { prefixDefaultLocale: false },   // en at /, zh at /zh/
   },
 });

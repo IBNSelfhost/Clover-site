@@ -1,7 +1,7 @@
 /** Every UI string on the site, per locale. Adding a language = a strings object here + src/content/legal/<code>/privacy.md. */
 export const locales = ['zh', 'en'] as const;
 export type Locale = (typeof locales)[number];
-export const defaultLocale: Locale = 'zh';
+export const defaultLocale: Locale = 'en';
 
 export const ui = {
   zh: {
