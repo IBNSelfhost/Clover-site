@@ -95,4 +95,4 @@ export const faq: Record<Locale, { q: string; a: string }[]> = {
 };
 
 /** Single place for the support address. Replace before launch. */
-export const contactEmail = 'hello@ibn5100.de';
+export const contactEmail = 'oceanust@hotmail.com';

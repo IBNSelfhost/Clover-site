@@ -31,5 +31,3 @@ None with network access; the open-source libraries used (GRDB, SwiftSoup, …) 
 ## Deleting data
 Removing an account inside the app deletes its on-device copy; notes on the server are untouched. Uninstalling removes all local data.
 
-## Contact
-Privacy questions: <hello@ibn5100.de>.
