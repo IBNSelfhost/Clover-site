@@ -1,0 +1,8 @@
+---
+import { features } from '../i18n/ui';
+import { resolveLocale } from '../i18n/utils';
+const items = features[resolveLocale(Astro.currentLocale)];
+---
+<div class="grid">
+  {items.map((f) => <div class="card"><h3>{f.title}</h3><p>{f.text}</p></div>)}
+</div>

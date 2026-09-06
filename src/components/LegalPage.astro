@@ -1,0 +1,21 @@
+---
+/** Renders `src/content/legal/<locale>/<slug>.md` inside the base layout. */
+import { getEntry, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { resolveLocale, useTranslations, htmlLang } from '../i18n/utils';
+
+interface Props { slug: 'privacy' }
+const locale = resolveLocale(Astro.currentLocale);
+const t = useTranslations(locale);
+const entry = await getEntry('legal', `${locale}/${Astro.props.slug}`);
+if (!entry) throw new Error(`missing src/content/legal/${locale}/${Astro.props.slug}.md`);
+const { Content } = await render(entry);
+const updated = entry.data.updated.toLocaleDateString(htmlLang[locale], { year: 'numeric', month: 'long', day: 'numeric' });
+---
+<Base title={`${entry.data.title} · Clover`}>
+  <article>
+    <h1>{entry.data.title}</h1>
+    <div class="updated">{t('updated')} {updated}</div>
+    <Content />
+  </article>
+</Base>

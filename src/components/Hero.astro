@@ -1,0 +1,17 @@
+---
+import { resolveLocale, useTranslations } from '../i18n/utils';
+const t = useTranslations(resolveLocale(Astro.currentLocale));
+/** Set to the App Store URL at launch — the only place that changes. */
+const storeHref: string | undefined = undefined;
+const strong = t('free.strong');
+const rest = t('free.text').startsWith(strong) ? t('free.text').slice(strong.length) : t('free.text');
+---
+<section class="hero">
+  <img src="/icon.png" alt="" width="128" height="128" />
+  <h1>{t('site.name')}</h1>
+  <p class="lede">{t('hero.lede')}</p>
+  {storeHref
+    ? <a class="badge" href={storeHref}>App Store</a>
+    : <><span class="badge soon">{t('hero.badge')}</span><p class="note">{t('hero.note')}</p></>}
+</section>
+<div class="free"><strong>{strong}</strong>{rest}</div>

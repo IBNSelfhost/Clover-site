@@ -1,0 +1,6 @@
+---
+import { faq } from '../i18n/ui';
+import { resolveLocale } from '../i18n/utils';
+const items = faq[resolveLocale(Astro.currentLocale)];
+---
+{items.map((f) => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}

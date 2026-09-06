@@ -1,0 +1,49 @@
+---
+import '../styles/global.css';
+import { resolveLocale, useTranslations, localePath, otherLocale, htmlLang } from '../i18n/utils';
+
+interface Props { title?: string; description?: string }
+const locale = resolveLocale(Astro.currentLocale);
+const t = useTranslations(locale);
+const { title = t('site.name'), description = t('site.description') } = Astro.props;
+const other = otherLocale(locale);
+// Same page in the other language: drop the locale prefix of the current path, re-add the other one.
+const slug = Astro.url.pathname.replace(/^\/(en)\//, '/').replace(/^\//, '').replace(/\/$/, '');
+const switchHref = localePath(other, slug);
+const nav = [
+  { href: localePath(locale), label: t('nav.home') },
+  { href: localePath(locale, 'privacy'), label: t('nav.privacy') },
+  { href: localePath(locale, 'support'), label: t('nav.support') },
+];
+---
+<!doctype html>
+<html lang={htmlLang[locale]}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="alternate" hreflang={htmlLang[other]} href={new URL(switchHref, Astro.site)} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL('/icon.png', Astro.site)} />
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="top">
+        <a class="brand" href={localePath(locale)}><img src="/icon.png" alt="" width="32" height="32" /> Clover</a>
+        <nav>
+          {nav.map((n) => <a href={n.href} aria-current={Astro.url.pathname === n.href ? 'page' : undefined}>{n.label}</a>)}
+          <a class="lang" href={switchHref} hreflang={htmlLang[other]}>{t('nav.switch')}</a>
+        </nav>
+      </header>
+      <slot />
+      <footer>
+        <span>© 2026 himmel · {t('site.name')}</span>
+        <span>{t('footer.disclaimer')}</span>
+      </footer>
+    </div>
+  </body>
+</html>

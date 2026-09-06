@@ -1,0 +1,12 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from './Hero.astro';
+import FeatureGrid from './FeatureGrid.astro';
+import { resolveLocale, useTranslations } from '../i18n/utils';
+const t = useTranslations(resolveLocale(Astro.currentLocale));
+---
+<Base>
+  <Hero />
+  <FeatureGrid />
+  <p class="note">{t('home.requirements')}</p>
+</Base>

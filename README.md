@@ -1,9 +1,37 @@
 # clover-site
 
-Static site for **Clover: Notes for Trilium** — landing page, privacy policy and support, in 中文 and English.
-No build step: deploy the repository root as-is (Cloudflare Pages: framework preset *None*, build command empty, output directory `/`).
+Website for **Clover: Notes for Trilium** — landing page, privacy policy and support, in 中文 (default, `/`) and English (`/en/`).
+Built with [Astro](https://astro.build) (static output, built-in i18n). No client-side JavaScript.
 
-Pages: `/` `/privacy.html` `/support.html` · `/en/` `/en/privacy.html` `/en/support.html`
+```sh
+npm install
+npm run dev      # http://localhost:4321
+npm run build    # → dist/
+```
 
-Before launch: replace the placeholder contact address `hello@ibn5100.de` in `privacy.html`, `support.html` and the `en/` copies,
-and swap the “Coming soon” badge on both index pages for the App Store link.
+## Deploy (Cloudflare Pages)
+
+Framework preset **Astro** · build command `npm run build` · output directory `dist` · environment variable `NODE_VERSION=22`.
+Custom domain: `clover.ibn5100.de`. `public/_headers` adds security headers.
+
+## Where things live
+
+| What | Where |
+|---|---|
+| UI strings, feature cards, FAQ, contact email | `src/i18n/ui.ts` — typed, one object per locale |
+| Privacy policy text | `src/content/legal/<locale>/privacy.md` — Markdown with `title` + `updated` frontmatter |
+| Page shell: head, nav, language switch, footer | `src/layouts/Base.astro` |
+| Page bodies | `src/components/{HomePage,LegalPage,SupportPage}.astro` |
+| Routes | `src/pages/*.astro` (zh) and `src/pages/en/*.astro` — three-line wrappers |
+| Icons, security headers | `public/` |
+
+## Adding a language
+
+1. `src/i18n/ui.ts`: add the code to `locales`, a strings object to `ui`, entries in `features` and `faq`, and `htmlLang` in `utils.ts`.
+2. `src/content/legal/<code>/privacy.md`.
+3. `astro.config.mjs`: add to `i18n.locales`; create `src/pages/<code>/{index,privacy,support}.astro` by copying the `en/` wrappers.
+
+## Before launch
+
+- Replace `contactEmail` in `src/i18n/ui.ts` and the address in both `privacy.md` files.
+- Set `storeHref` in `src/components/Hero.astro` to the App Store URL.
