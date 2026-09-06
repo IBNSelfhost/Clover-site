@@ -11,7 +11,7 @@ npm run build    # → dist/
 
 ## Deploy (Cloudflare Pages)
 
-Framework preset **Astro** · build command `npm run build` · output directory `dist` · environment variable `NODE_VERSION=22`.
+Framework preset **Astro** · build command `npm run build` · build output directory `dist` · deploy command **empty** (Pages serves `dist` itself). Node 22 is pinned by `.node-version` (Astro 7 needs ≥ 22.12; Cloudflare defaults to 18 otherwise).
 Custom domain: `clover.ibn5100.de`. `public/_headers` adds security headers.
 
 ## Where things live
